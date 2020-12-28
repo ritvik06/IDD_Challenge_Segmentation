@@ -18,10 +18,9 @@ device = "cuda:4" if torch.cuda.is_available() else "cpu"
 device = torch.device(device)
 print(device)
 
-data_dir = './IDD_Segmentation/'
-
-train_dir = os.path.join(data_dir, "train")
-val_dir = os.path.join(data_dir, "val")
+train_dir = './IDD_Segmentation/train/'
+val_dir = './IDD_Segmentation/val/'
+labels_dir = './IDD_Segmentation/gtAll/'
 
 train_fns = os.listdir(train_dir)
 val_fns = os.listdir(val_dir)
@@ -29,6 +28,8 @@ val_fns = os.listdir(val_dir)
 print(len(train_fns), len(val_fns))
 
 num_classes = 27
+
+################################# DATA HANDLING ############################################
 
 class ICVGIPDataset(Dataset):
 
@@ -51,27 +52,11 @@ class ICVGIPDataset(Dataset):
         
         labels = cv2.imread(label_fp, cv2.IMREAD_GRAYSCALE)
 
-        # labels_temp = np.asarray(labels) 
-        # print(np.unique(labels_temp))
-
-        # if len(np.where(labels_temp==27)[0])>0:
-        #     print(labels, index)
-
         labels = cv2.resize(labels, (256, 256), cv2.INTER_NEAREST)
 
         labels_temp = np.asarray(labels) 
 
-        #print(np.unique(labels_temp))
-
         labels = torch.Tensor(np.asarray(labels)).long()
-
-
-
-
-        
-#         cityscape, label = self.split_image(image)
-#         label_class = self.label_model.predict(label.reshape(-1,3)).reshape(256,256)
-#         label_class = torch.Tensor(label_class).long()
 
         image = self.transform(image)
         
@@ -85,11 +70,7 @@ class ICVGIPDataset(Dataset):
         
         return transform_ops(image)
 
-
-train_dir = './IDD_Segmentation/train/'
-val_dir = './IDD_Segmentation/val/'
-labels_dir = './IDD_Segmentation/gtAll/'
-
+################################# MODEL ############################################
 
 class UNet(nn.Module):
     
@@ -147,6 +128,8 @@ class UNet(nn.Module):
         # output_out = torch.softmax(output_out, dim=1)
         return output_out
 
+################################# TRAINING LOOP ############################################
+
 batch_size = 8 
 val_batch_size = 8
 
@@ -174,11 +157,7 @@ for epoch in tqdm(range(epochs)):
         X, Y = X.to(device), Y.to(device)
         optimizer.zero_grad()
         Y_pred = model(X)
-        #print(Y_pred.shape)
-        #print(Y.shape)
-        # print(np.unique(Y))
         loss = criterion(Y_pred, Y)
-        #print(loss.item())
         loss.backward()
         optimizer.step()
         epoch_loss += loss.item()
@@ -201,6 +180,8 @@ for epoch in tqdm(range(epochs)):
         ])
 
     iou_scores = []
+
+    ################################# VALIDATION ############################################
 
     for X,Y in tqdm(val_data_loader, total=len(val_data_loader), leave = False):
         X,Y = X.to(device), Y.to(device)
