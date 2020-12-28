@@ -1,0 +1,213 @@
+cuda:4
+6906 979
+  0%|          | 0/10 [00:00<?, ?it/s]
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 0
+Batch 50, Epoch 0
+Batch 100, Epoch 0
+Batch 150, Epoch 0
+Batch 200, Epoch 0
+Batch 250, Epoch 0
+Batch 300, Epoch 0
+Batch 350, Epoch 0
+Batch 400, Epoch 0
+Batch 450, Epoch 0
+Batch 500, Epoch 0
+Batch 550, Epoch 0
+Batch 600, Epoch 0
+Batch 650, Epoch 0
+Batch 700, Epoch 0
+Batch 750, Epoch 0
+Batch 800, Epoch 0
+Batch 850, Epoch 0
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 0 : 0.9052
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 1
+Batch 50, Epoch 1
+Batch 100, Epoch 1
+Batch 150, Epoch 1
+Batch 200, Epoch 1
+Batch 250, Epoch 1
+Batch 300, Epoch 1
+Batch 350, Epoch 1
+Batch 400, Epoch 1
+Batch 450, Epoch 1
+Batch 500, Epoch 1
+Batch 550, Epoch 1
+Batch 600, Epoch 1
+Batch 650, Epoch 1
+Batch 700, Epoch 1
+Batch 750, Epoch 1
+Batch 800, Epoch 1
+Batch 850, Epoch 1
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 1 : 0.9179
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 2
+Batch 50, Epoch 2
+Batch 100, Epoch 2
+Batch 150, Epoch 2
+Batch 200, Epoch 2
+Batch 250, Epoch 2
+Batch 300, Epoch 2
+Batch 350, Epoch 2
+Batch 400, Epoch 2
+Batch 450, Epoch 2
+Batch 500, Epoch 2
+Batch 550, Epoch 2
+Batch 600, Epoch 2
+Batch 650, Epoch 2
+Batch 700, Epoch 2
+Batch 750, Epoch 2
+Batch 800, Epoch 2
+Batch 850, Epoch 2
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 2 : 0.9257
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 3
+Batch 50, Epoch 3
+Batch 100, Epoch 3
+Batch 150, Epoch 3
+Batch 200, Epoch 3
+Batch 250, Epoch 3
+Batch 300, Epoch 3
+Batch 350, Epoch 3
+Batch 400, Epoch 3
+Batch 450, Epoch 3
+Batch 500, Epoch 3
+Batch 550, Epoch 3
+Batch 600, Epoch 3
+Batch 650, Epoch 3
+Batch 700, Epoch 3
+Batch 750, Epoch 3
+Batch 800, Epoch 3
+Batch 850, Epoch 3
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 3 : 0.9318
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 4
+Batch 50, Epoch 4
+Batch 100, Epoch 4
+Batch 150, Epoch 4
+Batch 200, Epoch 4
+Batch 250, Epoch 4
+Batch 300, Epoch 4
+Batch 350, Epoch 4
+Batch 400, Epoch 4
+Batch 450, Epoch 4
+Batch 500, Epoch 4
+Batch 550, Epoch 4
+Batch 600, Epoch 4
+Batch 650, Epoch 4
+Batch 700, Epoch 4
+Batch 750, Epoch 4
+Batch 800, Epoch 4
+Batch 850, Epoch 4
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 4 : 0.9407
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 5
+Batch 50, Epoch 5
+Batch 100, Epoch 5
+Batch 150, Epoch 5
+Batch 200, Epoch 5
+Batch 250, Epoch 5
+Batch 300, Epoch 5
+Batch 350, Epoch 5
+Batch 400, Epoch 5
+Batch 450, Epoch 5
+Batch 500, Epoch 5
+Batch 550, Epoch 5
+Batch 600, Epoch 5
+Batch 650, Epoch 5
+Batch 700, Epoch 5
+Batch 750, Epoch 5
+Batch 800, Epoch 5
+Batch 850, Epoch 5
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 5 : 0.9425
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 6
+Batch 50, Epoch 6
+Batch 100, Epoch 6
+Batch 150, Epoch 6
+Batch 200, Epoch 6
+Batch 250, Epoch 6
+Batch 300, Epoch 6
+Batch 350, Epoch 6
+Batch 400, Epoch 6
+Batch 450, Epoch 6
+Batch 500, Epoch 6
+Batch 550, Epoch 6
+Batch 600, Epoch 6
+Batch 650, Epoch 6
+Batch 700, Epoch 6
+Batch 750, Epoch 6
+Batch 800, Epoch 6
+Batch 850, Epoch 6
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 6 : 0.9468
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 7
+Batch 50, Epoch 7
+Batch 100, Epoch 7
+Batch 150, Epoch 7
+Batch 200, Epoch 7
+Batch 250, Epoch 7
+Batch 300, Epoch 7
+Batch 350, Epoch 7
+Batch 400, Epoch 7
+Batch 450, Epoch 7
+Batch 500, Epoch 7
+Batch 550, Epoch 7
+Batch 600, Epoch 7
+Batch 650, Epoch 7
+Batch 700, Epoch 7
+Batch 750, Epoch 7
+Batch 800, Epoch 7
+Batch 850, Epoch 7
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 7 : 0.9348
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 8
+Batch 50, Epoch 8
+Batch 100, Epoch 8
+Batch 150, Epoch 8
+Batch 200, Epoch 8
+Batch 250, Epoch 8
+Batch 300, Epoch 8
+Batch 350, Epoch 8
+Batch 400, Epoch 8
+Batch 450, Epoch 8
+Batch 500, Epoch 8
+Batch 550, Epoch 8
+Batch 600, Epoch 8
+Batch 650, Epoch 8
+Batch 700, Epoch 8
+Batch 750, Epoch 8
+Batch 800, Epoch 8
+Batch 850, Epoch 8
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 8 : 0.9434
+  0%|          | 0/864 [00:00<?, ?it/s]
+Batch 0, Epoch 9
+Batch 50, Epoch 9
+Batch 100, Epoch 9
+Batch 150, Epoch 9
+Batch 200, Epoch 9
+Batch 250, Epoch 9
+Batch 300, Epoch 9
+Batch 350, Epoch 9
+Batch 400, Epoch 9
+Batch 450, Epoch 9
+Batch 500, Epoch 9
+Batch 550, Epoch 9
+Batch 600, Epoch 9
+Batch 650, Epoch 9
+Batch 700, Epoch 9
+Batch 750, Epoch 9
+Batch 800, Epoch 9
+Batch 850, Epoch 9
+  0%|          | 0/123 [00:00<?, ?it/s]
+Validation average IOU score for epoch 9 : 0.9505
