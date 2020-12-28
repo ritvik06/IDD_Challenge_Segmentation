@@ -20,58 +20,6 @@ print(device)
 
 num_classes = 27
 
-class ICVGIPDataset(Dataset):
-
-    def __init__(self, image_dir, labels_dir):
-        self.image_dir = image_dir
-        self.labels_dir = labels_dir
-        self.image_fns = os.listdir(image_dir)
-
-    def __len__(self):
-        return len(self.image_fns)
-
-    def __getitem__(self, index):
-        image_fn = self.image_fns[index]
-        image_fp = os.path.join(self.image_dir, image_fn)
-        label_fp = os.path.join(self.labels_dir, image_fn[:6]+'_gtFine_labellevel3Ids.png')
-
-        image = Image.open(image_fp).convert("RGB")
-        image = image.resize((256, 256))
-        image = np.asarray(image)
-        
-        labels = cv2.imread(label_fp, cv2.IMREAD_GRAYSCALE)
-
-        # labels_temp = np.asarray(labels) 
-        # print(np.unique(labels_temp))
-
-        # if len(np.where(labels_temp==27)[0])>0:
-        #     print(labels, index)
-
-        labels = cv2.resize(labels, (256, 256), cv2.INTER_NEAREST)
-
-        labels_temp = np.asarray(labels) 
-
-        #print(np.unique(labels_temp))
-
-        labels = torch.Tensor(np.asarray(labels)).long()
-
-        image = self.transform(image)
-        
-        return image, labels
-
-    def transform(self, image):
-        transform_ops = transforms.Compose([
-                                            transforms.ToTensor(),
-                                            transforms.Normalize(mean=(0.485, 0.56, 0.406),
-                                                                 std=(0.229, 0.224, 0.225))])
-        
-        return transform_ops(image)
-
-
-train_dir = './IDD_Segmentation/train/'
-labels_dir = './IDD_Segmentation/gtAll/'
-
-
 class UNet(nn.Module):
     
     def __init__(self, num_classes):
@@ -128,40 +76,51 @@ class UNet(nn.Module):
         # output_out = torch.softmax(output_out, dim=1)
         return output_out
 
-model_path = './IDD_Segmentation/checkpoints/UNet_0.pkl' 
+model_path = './IDD_Segmentation/checkpoints/UNet_3.pkl' 
 model = UNet(num_classes = num_classes).to(device)
 model.load_state_dict(torch.load(model_path))
 
+transform_ops = transforms.Compose([
+                                    transforms.ToTensor(),
+                                    transforms.Normalize(mean=(0.485, 0.56, 0.406),
+                                                            std=(0.229, 0.224, 0.225))])
+
 val_dir = './IDD_Segmentation/val/'
+labels_dir = './IDD_Segmentation/gtAll/'
 
-test_batch_size = 8
-dataset = ICVGIPDataset(val_dir, labels_dir)
-data_loader = DataLoader(dataset, batch_size=test_batch_size)
-
-inverse_transform = transforms.Compose([
-        transforms.Normalize((-0.485/0.229, -0.456/0.224, -0.406/0.225), (1/0.229, 1/0.224, 1/0.225))  
-    ])
+val_img = os.listdir(val_dir)
 
 iou_scores = []
 
-for X,Y in tqdm(data_loader, total=len(data_loader), leave = False):
-    X,Y = X.to(device), Y.to(device)
-    Y_pred = model(X)
-    Y_pred = torch.argmax(Y_pred, dim=1)
+for img in val_img:
+    image = Image.open(val_dir+img).convert("RGB")
+    img_shape = np.asarray(image).shape
+    image = image.resize((256, 256))
+    image = transform_ops(image)
     
-    for i in range(test_batch_size):
-        try:
-            landscape = inverse_transform(X[i]).permute(1, 2, 0).cpu().detach().numpy()
-            label_class = Y[i].cpu().detach().numpy()
-            label_class_predicted = Y_pred[i].cpu().detach().numpy()
+    image = image.reshape(1,3,256,256)
 
-            intersection = np.logical_and(label_class, label_class_predicted)
-            union = np.logical_or(label_class, label_class_predicted)
+    pred = model(image.to(device))
+    pred = torch.argmax(pred, dim=1)
 
-            iou_score = np.sum(intersection) / np.sum(union)
-            iou_scores.append(iou_score)
-            #print(iou_score)
-        except:
-            pass 
+    pred = pred[0].cpu().detach().numpy().astype('uint8')
+    pred = cv2.resize(pred,(img_shape[1],img_shape[0]) , cv2.INTER_NEAREST) 
+
+    label = cv2.imread(labels_dir+img[:6]+'_gtFine_labellevel3Ids.png', cv2.IMREAD_GRAYSCALE)
+    label = np.asarray(label)
+    
+    intersection = np.logical_and(label, pred)
+    union = np.logical_or(label, pred)
+
+    iou_score = np.sum(intersection) / np.sum(union)
+    iou_scores.append(iou_score)
+    #print(iou_score)    
 
 print("Validation average IOU score %0.4f"% (sum(iou_scores) / len(iou_scores)))
+
+
+
+
+
+
+
