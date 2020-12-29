@@ -18,6 +18,16 @@ device = "cuda:4" if torch.cuda.is_available() else "cpu"
 device = torch.device(device)
 print(device)
 
+data_dir = './IDD_Segmentation/leftImg8bit/val/'
+
+scenes = os.listdir(data_dir)
+dict_scenes = {}
+
+for scene in scenes:
+    for img in os.listdir(data_dir + scene):
+        dict_scenes[img] = scene
+
+
 num_classes = 27
 
 class UNet(nn.Module):
@@ -76,7 +86,7 @@ class UNet(nn.Module):
         # output_out = torch.softmax(output_out, dim=1)
         return output_out
 
-model_path = './IDD_Segmentation/checkpoints/UNet_3.pkl' 
+model_path = './IDD_Segmentation/checkpoints/UNet_19.pkl' 
 model = UNet(num_classes = num_classes).to(device)
 model.load_state_dict(torch.load(model_path))
 
@@ -87,6 +97,8 @@ transform_ops = transforms.Compose([
 
 val_dir = './IDD_Segmentation/val/'
 labels_dir = './IDD_Segmentation/gtAll/'
+
+dump_dir = './IDD_Segmentation/val_predictions/'
 
 val_img = os.listdir(val_dir)
 
@@ -104,19 +116,31 @@ for img in val_img:
     pred = torch.argmax(pred, dim=1)
 
     pred = pred[0].cpu().detach().numpy().astype('uint8')
-    pred = cv2.resize(pred,(img_shape[1],img_shape[0]) , cv2.INTER_NEAREST) 
-
+    #print("Before "+ str(pred.shape)) 
+    pred = cv2.resize(pred,(img_shape[1], img_shape[0]) , cv2.INTER_NEAREST) 
+    
     label = cv2.imread(labels_dir+img[:6]+'_gtFine_labellevel3Ids.png', cv2.IMREAD_GRAYSCALE)
     label = np.asarray(label)
     
-    intersection = np.logical_and(label, pred)
-    union = np.logical_or(label, pred)
+    dump_scene = dict_scenes[img]
 
-    iou_score = np.sum(intersection) / np.sum(union)
-    iou_scores.append(iou_score)
+    if str(dump_scene) not in os.listdir(dump_dir):
+        os.mkdir(dump_dir+dump_scene)
+
+    cv2.imwrite(dump_dir + dump_scene + '/'+ img[:6] + '_gtFine_labellevel3Ids.png', pred)
+
+
+    #print("After " + str(pred.shape))
+    #print(label.shape)
+
+    # intersection = np.logical_and(label, pred)
+    # union = np.logical_or(label, pred)
+
+    # iou_score = np.sum(intersection) / np.sum(union)
+    # iou_scores.append(iou_score)
     #print(iou_score)    
 
-print("Validation average IOU score %0.4f"% (sum(iou_scores) / len(iou_scores)))
+# print("Validation average IOU score %0.4f"% (sum(iou_scores) / len(iou_scores)))
 
 
 
